@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getUsersRequest, createUserRequest } from '../actions/users';
+import {
+  getUsersRequest,
+  createUserRequest,
+  deleteUserRequest,
+} from '../actions/users';
 import NewUserForm from './NewUserForm';
 import UsersList from './UsersList';
 
-const App = ({ getUsersRequest, users, createUserRequest }) => {
+const App = ({ getUsersRequest, users, createUserRequest, deleteUserRequest }) => {
   useEffect(() => {
     getUsersRequest();
   },[getUsersRequest]);
@@ -22,10 +26,17 @@ const App = ({ getUsersRequest, users, createUserRequest }) => {
     })
   };
 
+  const handleDeleteUserClick = (userId) => {
+    deleteUserRequest(userId);
+  };
+
   return (
     <div style={styles}>
       <NewUserForm onSubmit={handleSubmit}/>
-      <UsersList users={users.items} />
+      <UsersList
+        users={users.items}
+        onDeleteUser={handleDeleteUserClick}
+      />
     </div>
   );
 };
@@ -35,4 +46,5 @@ const mapStateToProps = ({ users }) => ({ users });
 export default connect(mapStateToProps, {
   getUsersRequest,
   createUserRequest,
+  deleteUserRequest,
 })(App);
