@@ -50,8 +50,8 @@ Use case: Getting / fetching a list of data from an API.
 
 Example:
 ```javascript
-function* watchGetUsersRequest(){
-    yield takeEvery(action.Types.GET_USERS_REQUEST, getUsers);
+function* watchGetUsersRequest() {
+  yield takeEvery(action.Types.GET_USERS_REQUEST, getUsers);
 }
 ```
 
@@ -67,8 +67,8 @@ If you have a complex app that queries the same API endpoint from multiple compo
 Example:
 
 ```javascript
-function* watchGetLoggedInUserRequest(){
-    yield takeLatest(action.Types.GET_LOGGED_IN_USER_REQUEST, getLoggedInUser);
+function* watchGetLoggedInUserRequest() {
+  yield takeLatest(action.Types.GET_LOGGED_IN_USER_REQUEST, getLoggedInUser);
 }
 ```
 
@@ -84,11 +84,11 @@ Accepting a payment. Generally you don't want to be able to accept multiple, sim
 Example:
 
 ```javascript
-function* watchDeleteUserRequest(){
-    while(true){
-        const {userId} = yield take(action.Types.DELETE_USER_REQUEST);
-        yield call(deleteUser, {userId});
-    }
+function* watchDeleteUserRequest() {
+  while(true) {
+    const {userId} = yield take(action.Types.DELETE_USER_REQUEST);
+    yield call(deleteUser, {userId});
+  }
 }
 ```
 
@@ -105,18 +105,16 @@ Examples:
 
 ```javascript
 function* deleteUser({userId}){
-    try{
-        const result = yield call(api.deleteUser, userId);
-    }catch(e){
-    
-    }
+  try {
+    const result = yield call(api.deleteUser, userId);
+  } catch(e) {}
 }
  
 function* watchDeleteUserRequest(){
-    while(true){
-        const {userId} = yield take(action.Types.DELETE_USER_REQUEST);
-        yield call(deleteUser, {userId});
-    }
+  while(true){
+    const { userId } = yield take(action.Types.DELETE_USER_REQUEST);
+    yield call(deleteUser, {userId});
+  }
 }
 ```
 
@@ -130,14 +128,12 @@ Use case: Any time you want to update your redux state - usually after a call to
 Examples:
 
 ```javascript
-function* getUsers(){
-    try{
-        const result = yield call(api.getUsers);
-        yield put(actions.getUsersSuccess({
-            users: result.data.users
-        }));
-    }catch(e){
-    
-    }
+function* getUsers() {
+  try {
+    const result = yield call(api.getUsers);
+    yield put(actions.getUsersSuccess({
+      users: result.data.users
+    }));
+  } catch(e) {}
 }
 ```
